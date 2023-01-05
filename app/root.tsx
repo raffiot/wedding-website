@@ -17,7 +17,7 @@ import theme from "./theme";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Le Plus Beau Mariage du Monde",
   viewport: "width=device-width,initial-scale=1",
 });
 

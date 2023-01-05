@@ -7,6 +7,7 @@ processes = []
 
 [env]
   PORT = "8080"
+  NOTION_DATABASE_ID = "012a1ac1a3fb4e258b2e231ce2125f01"
 
 [experimental]
   allowed_public_ports = []
