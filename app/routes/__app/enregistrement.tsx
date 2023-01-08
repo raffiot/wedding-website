@@ -20,11 +20,12 @@ import {
 import { ActionFunction, LoaderFunction, json } from "@remix-run/node";
 import { Form, useLoaderData, useTransition } from "@remix-run/react";
 import notion, { Availability } from "~/services/notion";
-import { getSession, commitSession } from "~/session";
+import { getUserSession, commitSession } from "~/session";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData: FormData = await request.formData();
-  const session = await getSession(request.headers.get("Cookie"));
+  const session = await getUserSession(request);
+  const isOnlyVinDHonneur = session.get("LoginType") === "vinDHonneur";
   try {
     // Submit form to notion
     await notion.writeRegistration({
@@ -32,16 +33,24 @@ export const action: ActionFunction = async ({ request }) => {
       lastname: formData.get("lastname")!.toString(),
       email: formData.get("email")!.toString(),
       nbPersons: parseInt(formData.get("nbPersons")!.valueOf() as string),
-      availabilities: [
-        ...(formData.has(Availability.saturday) ? [Availability.saturday] : []),
-        ...(formData.has(Availability.sunday) ? [Availability.sunday] : []),
-      ],
+      ...(isOnlyVinDHonneur
+        ? { availabilities: [Availability.wine] }
+        : {
+            availabilities: [
+              Availability.wedding,
+              ...(formData.has(Availability.saturday)
+                ? [Availability.saturday]
+                : []),
+              ...(formData.has(Availability.sunday)
+                ? [Availability.sunday]
+                : []),
+            ],
+          }),
       anecdote: formData.get("anecdote")?.toString(),
     });
 
     // Save that form has been submitted in cookies
     session.set("FormSubmitted", true);
-    await commitSession(session);
     return json(
       {},
       {
@@ -56,13 +65,17 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
-  return json({ isFormSubmitted: session.get("FormSubmitted") });
+  const session = await getUserSession(request);
+  return json({
+    isFormSubmitted: session.get("FormSubmitted"),
+    loginType: session.get("LoginType"),
+  });
 };
 
 export default function Acceuil() {
   const transition = useTransition();
-  const { isFormSubmitted } = useLoaderData<typeof loader>();
+  const { isFormSubmitted, loginType } = useLoaderData<typeof loader>();
+  const isOnlyVinDHonneur = loginType === "vinDHonneur";
 
   if (transition.state === "loading" || transition.state === "submitting") {
     return (
@@ -99,19 +112,21 @@ export default function Acceuil() {
           <FormLabel>Email</FormLabel>
           <Input placeholder="margaux.utrilla@gmail.com" name="email" />
         </FormControl>
-        <FormControl as="fieldset" marginTop={12}>
-          <FormLabel as="legend">Je serais présent:</FormLabel>
-          <CheckboxGroup defaultValue={["Samedi", "Dimanche"]}>
-            <HStack spacing="24px">
-              <Checkbox value="Samedi" name={Availability.saturday}>
-                Samedi
-              </Checkbox>
-              <Checkbox value="Dimanche" name={Availability.sunday}>
-                Dimanche
-              </Checkbox>
-            </HStack>
-          </CheckboxGroup>
-        </FormControl>
+        {!isOnlyVinDHonneur ? (
+          <FormControl as="fieldset" marginTop={12}>
+            <FormLabel as="legend">Je serais présent:</FormLabel>
+            <CheckboxGroup defaultValue={["Samedi", "Dimanche"]}>
+              <HStack spacing="24px">
+                <Checkbox value="Samedi" name={Availability.saturday}>
+                  Samedi
+                </Checkbox>
+                <Checkbox value="Dimanche" name={Availability.sunday}>
+                  Dimanche
+                </Checkbox>
+              </HStack>
+            </CheckboxGroup>
+          </FormControl>
+        ) : null}
         <FormControl isRequired marginTop={12}>
           <FormLabel>Combien de personnes seront nous ?</FormLabel>
           <NumberInput defaultValue={1} min={1} max={10} name="nbPersons">

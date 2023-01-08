@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Center, Heading, Divider, Box } from "@chakra-ui/react";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import Selector from "~/components/Selector";
 import { LoaderArgs } from "@remix-run/node";
+import Selector from "~/components/Selector";
+import { requireLogin } from "~/utils/session.server";
 
 const OPTIONS = [
   {
@@ -28,6 +29,7 @@ const OPTIONS = [
 ];
 
 export const loader = async ({ request }: LoaderArgs) => {
+  await requireLogin(request);
   const url = new URL(request.url);
   return url.pathname;
 };

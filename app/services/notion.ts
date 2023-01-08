@@ -3,6 +3,8 @@ import { Client } from "@notionhq/client";
 export enum Availability {
   "saturday" = "saturday",
   "sunday" = "sunday",
+  "wedding" = "wedding",
+  "wine" = "wine",
 }
 
 export type Registration = {
@@ -12,6 +14,19 @@ export type Registration = {
   nbPersons: number;
   availabilities: Availability[];
   anecdote?: string;
+};
+
+const availabilityToNotionName = (availability: Availability) => {
+  switch (availability) {
+    case Availability.saturday:
+      return "Samedi";
+    case Availability.sunday:
+      return "Dimanche";
+    case Availability.wedding:
+      return "Mariage";
+    case Availability.wine:
+      return "Vin d'honneur";
+  }
 };
 
 class Notion {
@@ -43,8 +58,7 @@ class Notion {
         },
         Disponible: {
           multi_select: parameters.availabilities.map((availability) => ({
-            name:
-              availability === Availability.saturday ? "Samedi" : "Dimanche",
+            name: availabilityToNotionName(availability),
           })),
         },
         Anecdote: {
