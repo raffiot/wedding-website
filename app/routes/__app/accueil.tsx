@@ -1,10 +1,11 @@
 import { Box, Image, Text } from "@chakra-ui/react";
+import imageAccueil from "~/assets/margaux-et-ewan.jpg";
 
 export default function Acceuil() {
   return (
     <>
       <Image
-        src="https://storage.googleapis.com/margaux-et-ewan-se-marient-assets/image-accueil.jpg"
+        src={imageAccueil}
         marginTop={16}
         boxSize="600px"
         objectFit="cover"

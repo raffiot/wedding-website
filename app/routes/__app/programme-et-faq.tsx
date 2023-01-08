@@ -1,14 +1,4 @@
-import {
-  Box,
-  Image,
-  Text,
-  Center,
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  AccordionItem,
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 export default function Programme_FAQ() {
   return (
@@ -29,13 +19,6 @@ export default function Programme_FAQ() {
           </Text>
         </Box>
       </Box>
-      <Image
-        src="https://storage.googleapis.com/margaux-et-ewan-se-marient-assets/carte.png"
-        marginTop={16}
-        boxSize="400px"
-        objectFit="cover"
-        borderRadius={16}
-      />
     </>
   );
 }
