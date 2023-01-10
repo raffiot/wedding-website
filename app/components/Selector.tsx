@@ -1,4 +1,4 @@
-import { Stack, Box } from "@chakra-ui/react";
+import { Stack, Box, Text } from "@chakra-ui/react";
 import { Link } from "@remix-run/react";
 
 type SelectorOption = {
@@ -18,7 +18,7 @@ export default function Selector({
   onPress,
 }: SelectorProps) {
   return (
-    <Stack spacing={6} direction="row" marginX={16} flex="2 0 auto">
+    <Stack spacing={6} direction="row">
       {options.map(({ id, label, to }) => {
         if (id === selectedOption) {
           return (
@@ -31,13 +31,21 @@ export default function Selector({
               color="gray.500"
               onClick={() => onPress(id)}
             >
-              <Link to={to}>{label}</Link>
+              <Link to={to}>
+                <Text fontSize={{ base: "8px", md: "12px", lg: "16px" }}>
+                  {label}
+                </Text>
+              </Link>
             </Box>
           );
         }
         return (
           <Box as="button" key={id} fontSize="md" onClick={() => onPress(id)}>
-            <Link to={to}>{label}</Link>
+            <Link to={to}>
+              <Text fontSize={{ base: "8px", md: "12px", lg: "16px" }}>
+                {label}
+              </Text>
+            </Link>
           </Box>
         );
       })}

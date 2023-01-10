@@ -1,9 +1,15 @@
 import { extendTheme } from "@chakra-ui/react";
-import type { StyleFunctionProps } from "@chakra-ui/styled-system";
 
 const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: "#fdfff5",
+      },
+    },
+  },
   fonts: {
-    heading: `'Poppins', sans-serif`,
+    heading: `'Dancing Script', sans-serif`,
     body: `'Poppins', sans-serif`,
   },
   components: {
@@ -13,6 +19,7 @@ const theme = extendTheme({
           borderWidth: "5px",
           borderStyle: "solid",
           borderRadius: 10,
+          borderColor: "gray.400",
         },
       },
     },

@@ -1,37 +1,35 @@
-import { Box, Image, Text } from "@chakra-ui/react";
-import imageAccueil from "~/assets/margaux-et-ewan.jpg";
+import { AspectRatio, Box, Image, Text } from "@chakra-ui/react";
+import imageAccueil from "~/assets/accueil-image-1.jpg";
 
 export default function Acceuil() {
   return (
     <>
-      <Image
-        src={imageAccueil}
-        marginTop={16}
-        boxSize="600px"
-        objectFit="cover"
-        borderRadius={16}
-      />
       <Box width="50%" marginTop={16}>
         <Text align="center">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          porta dui et risus pharetra semper. Morbi velit lorem, dapibus vel
-          volutpat in, bibendum quis nunc. Aliquam ornare enim vitae risus
-          mattis consectetur. Proin mollis nibh at sem dapibus pretium.
-          Phasellus mollis gravida blandit. Proin ac congue massa, eget pretium
-          dui. Integer lacinia sem quis tempor rutrum. Suspendisse imperdiet
-          erat vel imperdiet aliquet. Cras dapibus ac ante nec pulvinar.
+          Nous sommes ravis de vous convier à notre union que nous célébrerons
+          le samedi 24 Juin 2023 au château de Césarges à Maubec.
         </Text>
-        <Text align="center">
-          Fusce pulvinar vel ante id suscipit. Mauris tincidunt ut magna non
-          feugiat. Sed et dui sed lacus finibus lacinia. Ut sit amet velit id
-          orci gravida maximus sit amet eget mi. Integer id consectetur augue.
-          In non placerat risus. Integer at sodales lectus, vitae vestibulum
-          nisl. In vel massa eleifend, suscipit libero ac, fringilla tellus.
-          Curabitur eu sodales dui. Aenean dapibus in ex et imperdiet. Sed
-          congue lobortis tempus. Etiam sit amet suscipit leo. Curabitur sed
-          ante ac lorem tempus porta. Sed sed vestibulum nulla. Duis et mauris
-          massa. Fusce in tempor massa.
+        <Text align="center" pt="4">
+          Nous partagerons sur ce site toutes les informations utiles à propos
+          du mariage, du programme aux suggestions d'hôtels, afin que vous
+          puissiez profiter au maximum. Si vous avez des questions
+          supplémentaires, merci de nous contacter directement.
         </Text>
+        <Text align="center" pt="4">
+          Nous savons que vous serez tous sur votre 31, mais n'oubliez pas pour
+          autant de vous mettre à l'aise pour vous amuser et danser jusqu'au
+          bout de la nuit ! Nous offrons en récompense un copieux dîner et une
+          soirée de folie sur le dancefloor.
+        </Text>
+        <Text align="center" pt="4">
+          A très vite,
+        </Text>
+        <Text align="center" pt="4">
+          Margaux et Ewan
+        </Text>
+        <AspectRatio marginTop={16} ratio={4 / 3}>
+          <Image src={imageAccueil} objectFit="cover" borderRadius={16} />
+        </AspectRatio>
       </Box>
     </>
   );

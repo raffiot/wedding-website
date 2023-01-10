@@ -16,6 +16,7 @@ import {
   NumberDecrementStepper,
   Text,
   Spinner,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { ActionFunction, LoaderFunction, json } from "@remix-run/node";
 import { Form, useLoaderData, useTransition } from "@remix-run/react";
@@ -72,7 +73,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 };
 
-export default function Acceuil() {
+export default function ConfirmationPresence() {
   const transition = useTransition();
   const { isFormSubmitted, loginType } = useLoaderData<typeof loader>();
   const isOnlyVinDHonneur = loginType === "vinDHonneur";
@@ -125,6 +126,9 @@ export default function Acceuil() {
                 </Checkbox>
               </HStack>
             </CheckboxGroup>
+            <FormHelperText>
+              En cas de doute pour le Dimanche, cochez tout de même la case
+            </FormHelperText>
           </FormControl>
         ) : null}
         <FormControl isRequired marginTop={12}>

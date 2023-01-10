@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  FormControl,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -15,6 +8,7 @@ import {
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { commitSession, getUserSession } from "~/session";
 import { login } from "~/utils/session.server";
+import imageBackground from "~/assets/background-login.jpg";
 
 export const action: ActionFunction = async ({ request }) => {
   const session = await getUserSession(request);
@@ -50,10 +44,19 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Home() {
   const { loggedIn } = useLoaderData<typeof loader>();
   return (
-    <Box h="100vh" w="100%" display="flex">
+    <Box
+      h="100vh"
+      w="100%"
+      display="flex"
+      backgroundImage={imageBackground}
+      backgroundPosition="auto"
+      backgroundRepeat="no-repeat"
+      backgroundSize="cover"
+      opacity={0.8}
+    >
       {loggedIn ? (
-        <Button p="8" margin="auto">
-          <Link to="/accueil">Bienvenue au plus beau mariage du monde !</Link>
+        <Button p="8" margin="auto" boxShadow="dark-lg">
+          <Link to="/accueil">Cliquer pour accéder au site</Link>
         </Button>
       ) : (
         <Box
@@ -61,9 +64,10 @@ export default function Home() {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          p="8"
-          borderWidth="1px"
+          p="12"
           borderRadius="lg"
+          boxShadow="dark-lg"
+          bg="white"
         >
           <Form method="post">
             <FormControl isRequired>

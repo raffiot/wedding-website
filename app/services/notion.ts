@@ -71,6 +71,20 @@ class Notion {
           ],
         },
       },
+      children: [
+        {
+          object: "block",
+          paragraph: {
+            rich_text: [
+              {
+                text: {
+                  content: `Anecdote: ${parameters.anecdote || ""}`,
+                },
+              },
+            ],
+          },
+        },
+      ],
     });
   }
 }
