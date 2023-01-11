@@ -52,15 +52,15 @@ export default function App() {
         Margaux et Ewan se marient
       </Heading>
       <Box marginTop={8} display="flex" width="100%" alignItems="center">
-        <Divider size="l" mr={[2, 8]} />
+        <Divider size="l" mx={[2, 8]} />
         <Selector
           options={OPTIONS}
           selectedOption={selectedOption}
           onPress={setSelectedOption}
         />
-        <Divider size="l" ml={[2, 8]} />
+        <Divider size="l" mx={[2, 8]} />
       </Box>
-      <Center display="flex" flexDir="column" px={4}>
+      <Center display="flex" flexDir="column" px={4} mb={16}>
         <Outlet />
       </Center>
     </Center>

@@ -18,7 +18,7 @@ export default function Selector({
   onPress,
 }: SelectorProps) {
   return (
-    <Stack spacing={6} direction="row">
+    <Stack spacing={[3, 6]} direction="row">
       {options.map(({ id, label, to }) => {
         if (id === selectedOption) {
           return (
@@ -32,9 +32,7 @@ export default function Selector({
               onClick={() => onPress(id)}
             >
               <Link to={to}>
-                <Text fontSize={{ base: "8px", md: "12px", lg: "16px" }}>
-                  {label}
-                </Text>
+                <Text fontSize={[10, 16]}>{label}</Text>
               </Link>
             </Box>
           );
@@ -42,9 +40,7 @@ export default function Selector({
         return (
           <Box as="button" key={id} fontSize="md" onClick={() => onPress(id)}>
             <Link to={to}>
-              <Text fontSize={{ base: "8px", md: "12px", lg: "16px" }}>
-                {label}
-              </Text>
+              <Text fontSize={[10, 16]}>{label}</Text>
             </Link>
           </Box>
         );

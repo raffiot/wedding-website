@@ -61,15 +61,6 @@ class Notion {
             name: availabilityToNotionName(availability),
           })),
         },
-        Anecdote: {
-          rich_text: [
-            {
-              text: {
-                content: parameters.anecdote || "",
-              },
-            },
-          ],
-        },
       },
       children: [
         {

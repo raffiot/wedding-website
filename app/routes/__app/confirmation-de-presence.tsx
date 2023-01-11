@@ -19,7 +19,12 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 import { ActionFunction, LoaderFunction, json } from "@remix-run/node";
-import { Form, useLoaderData, useTransition } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 import notion, { Availability } from "~/services/notion";
 import { getUserSession, commitSession } from "~/session";
 
@@ -61,7 +66,10 @@ export const action: ActionFunction = async ({ request }) => {
       },
     );
   } catch (error) {
-    throw new Error("Une erreur est survenue lors de l'envoi du formulaire");
+    return json(
+      { error: "⚠️ Votre inscription a échoué, veuillez réessayer." },
+      { status: 500 },
+    );
   }
 };
 
@@ -74,6 +82,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function ConfirmationPresence() {
+  const actionData = useActionData();
   const transition = useTransition();
   const { isFormSubmitted, loginType } = useLoaderData<typeof loader>();
   const isOnlyVinDHonneur = loginType === "vinDHonneur";
@@ -100,6 +109,11 @@ export default function ConfirmationPresence() {
 
   return (
     <Box marginTop={16}>
+      {actionData?.error ? (
+        <Text mb={8} align="center" color="red.600">
+          {actionData.error}
+        </Text>
+      ) : null}
       <Form method="post">
         <FormControl isRequired>
           <FormLabel>Prénom</FormLabel>

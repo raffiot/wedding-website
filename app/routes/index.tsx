@@ -1,11 +1,18 @@
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 import {
   ActionFunction,
   LoaderFunction,
   json,
   redirect,
 } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import { commitSession, getUserSession } from "~/session";
 import { login } from "~/utils/session.server";
 import imageBackground from "~/assets/background-login.jpg";
@@ -15,16 +22,22 @@ export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const password = form.get("password");
   if (!password) {
-    return json({
-      error: "Entrez un mot de passe",
-    });
+    return json(
+      {
+        error: "Entrez un mot de passe",
+      },
+      { status: 422 },
+    );
   }
 
   const { success, loginType } = await login({ password: password.toString() });
   if (!success) {
-    return json({
-      error: "Mot de passe invalid",
-    });
+    return json(
+      {
+        error: "Mot de passe invalid",
+      },
+      { status: 422 },
+    );
   }
 
   session.set("LoginType", loginType);
@@ -43,6 +56,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Home() {
   const { loggedIn } = useLoaderData<typeof loader>();
+  const actionData = useActionData();
+
   return (
     <Box
       h="100vh"
@@ -70,9 +85,13 @@ export default function Home() {
           bg="white"
         >
           <Form method="post">
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={actionData?.error}>
               <FormLabel>Mot de Passe</FormLabel>
               <Input name="password" type="password" />
+
+              {actionData?.error ? (
+                <FormErrorMessage>{actionData.error}</FormErrorMessage>
+              ) : null}
             </FormControl>
             <Button type="submit" marginTop="8">
               Je me connecte !
