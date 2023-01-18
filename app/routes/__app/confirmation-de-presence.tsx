@@ -38,6 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
       firstname: formData.get("firstname")!.toString(),
       lastname: formData.get("lastname")!.toString(),
       email: formData.get("email")!.toString(),
+      phone: formData.get("phone")!.toString(),
       nbPersons: parseInt(formData.get("nbPersons")!.valueOf() as string),
       ...(isOnlyVinDHonneur
         ? { availabilities: [Availability.wine] }
@@ -117,15 +118,19 @@ export default function ConfirmationPresence() {
       <Form method="post">
         <FormControl isRequired>
           <FormLabel>Prénom</FormLabel>
-          <Input placeholder="Margaux" name="firstname" />
+          <Input placeholder="Raphaël" name="firstname" />
         </FormControl>
-        <FormControl isRequired>
+        <FormControl isRequired mt={2}>
           <FormLabel>Nom</FormLabel>
-          <Input placeholder="Utrilla" name="lastname" />
+          <Input placeholder="Scordel" name="lastname" />
         </FormControl>
-        <FormControl isRequired>
+        <FormControl isRequired mt={2}>
           <FormLabel>Email</FormLabel>
-          <Input placeholder="margaux.utrilla@gmail.com" name="email" />
+          <Input placeholder="raphael@gmail.com" name="email" type="email" />
+        </FormControl>
+        <FormControl isRequired mt={2}>
+          <FormLabel>Numéro de téléphone</FormLabel>
+          <Input placeholder="0610432749" name="phone" type="tel" />
         </FormControl>
         {!isOnlyVinDHonneur ? (
           <FormControl as="fieldset" marginTop={12}>

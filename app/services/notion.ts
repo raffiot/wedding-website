@@ -11,6 +11,7 @@ export type Registration = {
   firstname: string;
   lastname: string;
   email: string;
+  phone: string;
   nbPersons: number;
   availabilities: Availability[];
   anecdote?: string;
@@ -55,6 +56,9 @@ class Notion {
         },
         Email: {
           email: parameters.email,
+        },
+        Phone: {
+          phone_number: parameters.phone,
         },
         Disponible: {
           multi_select: parameters.availabilities.map((availability) => ({

@@ -1,12 +1,17 @@
-import { extendTheme } from "@chakra-ui/react";
+import { StyleFunctionProps, extendTheme } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 
 const theme = extendTheme({
+  config: {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+  },
   styles: {
-    global: {
+    global: (props: StyleFunctionProps) => ({
       body: {
-        bg: "#fdfff5",
+        bg: mode("#fdfff5", "black.900")(props),
       },
-    },
+    }),
   },
   fonts: {
     heading: `'Dancing Script', sans-serif`,

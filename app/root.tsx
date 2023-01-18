@@ -1,7 +1,7 @@
 // root.tsx
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import {
   Links,
   LiveReload,
@@ -87,6 +87,7 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={theme}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Outlet />
       </ChakraProvider>
     </Document>

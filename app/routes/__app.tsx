@@ -4,6 +4,9 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { LoaderArgs } from "@remix-run/node";
 import Selector from "~/components/Selector";
 import { requireLogin } from "~/utils/session.server";
+import EasterHeading from "~/components/EasterHeading";
+import ewan from "~/assets/ewan.jpeg";
+import margaux from "~/assets/margaux.jpeg";
 
 const OPTIONS = [
   {
@@ -48,9 +51,31 @@ export default function App() {
 
   return (
     <Center display="flex" flexDir="column">
-      <Heading size="2xl" px={8} py={16} style={{ textAlign: "center" }}>
-        Margaux et Ewan se marient
-      </Heading>
+      <Box
+        display="flex"
+        flexDir="row"
+        px={8}
+        py={16}
+        flexWrap="wrap"
+        justifyContent="center"
+      >
+        <EasterHeading
+          title="Margaux"
+          image={margaux}
+          modalTitle="Margou Kikouu 💅"
+        />
+        <Heading size="2xl" px={3}>
+          et
+        </Heading>
+        <EasterHeading
+          title="Ewan"
+          image={ewan}
+          modalTitle="Ewan Jack Sparrow 🏴‍☠️"
+        />
+        <Heading size="2xl" px={3}>
+          se marient
+        </Heading>
+      </Box>
       <Box marginTop={8} display="flex" width="100%" alignItems="center">
         <Divider size="l" mx={[2, 8]} />
         <Selector
