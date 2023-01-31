@@ -15,6 +15,7 @@ export type Registration = {
   nbPersons: number;
   availabilities: Availability[];
   anecdote?: string;
+  additionalNames?: string;
 };
 
 const availabilityToNotionName = (availability: Availability) => {
@@ -64,6 +65,15 @@ class Notion {
           multi_select: parameters.availabilities.map((availability) => ({
             name: availabilityToNotionName(availability),
           })),
+        },
+        "Prénoms des invités additionnels": {
+          rich_text: [
+            {
+              text: {
+                content: parameters.additionalNames || "",
+              },
+            },
+          ],
         },
       },
       children: [

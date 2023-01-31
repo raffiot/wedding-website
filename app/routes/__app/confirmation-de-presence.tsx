@@ -25,6 +25,7 @@ import {
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
+import { useState } from "react";
 import notion, { Availability } from "~/services/notion";
 import { getUserSession, commitSession } from "~/session";
 
@@ -53,6 +54,7 @@ export const action: ActionFunction = async ({ request }) => {
                 : []),
             ],
           }),
+      additionalNames: formData.get("additionalNames")?.toString(),
       anecdote: formData.get("anecdote")?.toString(),
     });
 
@@ -83,10 +85,19 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function ConfirmationPresence() {
+  const [showMoreThanOnePerson, setShowMoreThanOnePerson] = useState(false);
   const actionData = useActionData();
   const transition = useTransition();
   const { isFormSubmitted, loginType } = useLoaderData<typeof loader>();
   const isOnlyVinDHonneur = loginType === "vinDHonneur";
+
+  const handleNbPeopleChange = (_: string, value: number): void => {
+    if (value > 1 && !showMoreThanOnePerson) {
+      setShowMoreThanOnePerson(true);
+    } else if (value === 1 && showMoreThanOnePerson) {
+      setShowMoreThanOnePerson(false);
+    }
+  };
 
   if (transition.state === "loading" || transition.state === "submitting") {
     return (
@@ -155,7 +166,13 @@ export default function ConfirmationPresence() {
         ) : null}
         <FormControl isRequired marginTop={12}>
           <FormLabel>Combien de personnes seront nous ?</FormLabel>
-          <NumberInput defaultValue={1} min={1} max={10} name="nbPersons">
+          <NumberInput
+            defaultValue={1}
+            min={1}
+            max={10}
+            name="nbPersons"
+            onChange={handleNbPeopleChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -163,6 +180,19 @@ export default function ConfirmationPresence() {
             </NumberInputStepper>
           </NumberInput>
         </FormControl>
+        {showMoreThanOnePerson ? (
+          <FormControl marginTop={12}>
+            <FormLabel>Prénom(s) des personnes supplementaires</FormLabel>
+            <Textarea
+              name="additionalNames"
+              height="2rem"
+              placeholder="Bastien,Margaux,Ewan"
+            />
+            <FormHelperText>
+              Entrez les prénoms séparés par des ","
+            </FormHelperText>
+          </FormControl>
+        ) : null}
         <FormControl marginTop={12}>
           <FormLabel>Anecdote marrante avec Margaux et Ewan</FormLabel>
           <Textarea
