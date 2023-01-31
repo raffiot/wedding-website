@@ -1,7 +1,9 @@
 import { Box, Center, Link, Text } from "@chakra-ui/react";
 import { LoaderFunction, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import TextModal from "~/components/TextModal";
 import { getUserSession } from "~/session";
+import imagePlan from "~/assets/plan.png";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSession(request);
@@ -20,14 +22,29 @@ export default function QuestionsReponses() {
           <Text as="b">Qui est concerné par l’invitation ?</Text>
           <Text>
             Vous êtes conviés avec votre conjoint/compagnon ainsi que vos
-            enfants.
+            enfants adolescents et/ou en bas âge.
           </Text>
         </Box>
         <Box pt={2}>
-          <Text>Y a t-il de la place pour se garer ?</Text>
+          <Text as="b">Comment venir jusqu’au château ?</Text>
+          <Text>
+            Le Château de Césarges est un lieu isolé, vous devez impérativement
+            être véhiculé pour venir et repartir. La gare la plus proche se
+            trouve à 6 km (Bourgoin Jallieu) .
+          </Text>
+          <TextModal
+            title="Plan d'accès"
+            image={imagePlan}
+            modalTitle="Plan d'accès au Château de Césarges"
+          />
+        </Box>
+        <Box pt={2}>
+          <Text as="b">Y a t-il de la place pour se garer ?</Text>
           <Text>
             Oui, lors de votre arrivée vous aurez un parking sur la gauche avec
-            100 places de voitures.
+            100 places de voitures. Environ 200 personnes sont attendues, c’est
+            pourquoi nous vous invitons à faire du covoiturage dans la mesure du
+            possible.
           </Text>
         </Box>
         <Box pt={2}>
@@ -42,7 +59,28 @@ export default function QuestionsReponses() {
         </Box>
         <Box pt={2}>
           <Text as="b">Y a-t-il un thème ?</Text>
-          <Text>Pas de thème imposé, venez comme vous êtes !</Text>
+          <Text>
+            Il n’y a pas de thème imposé, venez comme vous en avez envie !
+          </Text>
+        </Box>
+        <Box pt={2}>
+          <Text as="b">Je souhaite proposer une activité, comment faire ?</Text>
+          <Text>
+            Nous vous invitons à prendre contact avec Gabrielle MANIN (tél : 06
+            29 42 51 52)
+          </Text>
+        </Box>
+        <Box pt={2}>
+          <Text as="b">
+            J’aimerai faire un discours lors du mariage, à qui dois-je
+            m’adresser ?
+          </Text>
+          <Text>
+            Afin de pouvoir respecter les temps et l'organisation du mariage,
+            nous vous demandons de bien vouloir vous rapprocher de Manon SINDEL
+            (tél : 07 67 03 27 17). Merci de bien vouloir faire la démarche au
+            préalable afin d’éviter une réorganisation au dernier moment.
+          </Text>
         </Box>
         {isMariage ? (
           <>
@@ -63,14 +101,16 @@ export default function QuestionsReponses() {
                 Le château dispose de quelques chambres réservées aux membres de
                 nos familles habitant loin et ayant reçu l’information. Pour
                 ceux qui souhaitent profiter du brunch du dimanche avec nous,
-                nous vous proposons ci-dessous les adresses et contacts
-                d'hébergement à proximité avec qui le château à l’habitude de
-                travailler. Si un des hébergements proposés ou un autre de votre
-                choix vous convient, merci de les contacter directement pour
-                réserver votre logement.
+                nous vous proposons ci-dessous deux hébergements à proximité et
+                avec qui le château à l’habitude de travailler. Si un des
+                hébergements proposés (ou un autre de votre choix) vous
+                convient, merci de le contacter directement pour réserver votre
+                logement.
               </Text>
               <Box mt={2}>
-                <Text as="i">Hôtel à 12 minutes en voiture :</Text>
+                <Text as="i">
+                  Hôtel KYRIAD BOURGOIN JALLIEU (à 12 minutes en voiture){" "}
+                </Text>
                 <Center display="flex" flexDir="column" mt={2}>
                   <Text align="center">Interlocuteur : Mme NIETO Béatrice</Text>
                   <Link
@@ -83,7 +123,9 @@ export default function QuestionsReponses() {
                 </Center>
               </Box>
               <Box mt={2}>
-                <Text as="i">Chambres d’hôtes à 5 minutes en voiture :</Text>
+                <Text as="i">
+                  Chambres d’hôtes CASTEL SEREIN (à 5 minutes en voiture) :
+                </Text>
                 <Center display="flex" flexDir="column" mt={2}>
                   <Text align="center">CASTEL SEREIN – Chambres d’hôtes</Text>
                   <Link
@@ -97,7 +139,24 @@ export default function QuestionsReponses() {
               </Box>
             </Box>
           </>
-        ) : null}
+        ) : (
+          <>
+            <Box pt={2}>
+              <Text as="b">Combien de temps dure le mariage ?</Text>
+              <Text>
+                Vous êtes conviés à partir du Samedi 24 Juin 2023 à 15h00, et ce
+                jusqu’à la fin du vin d’honneur qui s’achèvera à 20h00.
+              </Text>
+            </Box>
+          </>
+        )}
+        <Box pt={2}>
+          <Text as="b">Comment contacter les futurs mariés ? </Text>
+          <Text>
+            Margaux UTRILLA--KRISKOFF : margaux.u@hotmail.fr / 06 04 53 43 15
+          </Text>
+          <Text>Ewan HALBERT : ewan.halbert@gmail.com / 06 58 11 17 42</Text>
+        </Box>
       </Box>
     </Box>
   );

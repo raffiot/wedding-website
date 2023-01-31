@@ -1,7 +1,8 @@
-import { Box, Link, Text } from "@chakra-ui/react";
+import { AspectRatio, Box, Link, Text, Image } from "@chakra-ui/react";
 import { LoaderFunction, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getUserSession } from "~/session";
+import imageChateau from "~/assets/chateau.png";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getUserSession(request);
@@ -17,6 +18,9 @@ export default function Programme() {
   return (
     <>
       <Box width="50%" marginTop={16}>
+        <AspectRatio ratio={4 / 3}>
+          <Image src={imageChateau} objectFit="cover" borderRadius={16} />
+        </AspectRatio>
         <Box paddingTop={6}>
           <Text>Lieu pour la journée :</Text>
           <Text p={6} align="center">
@@ -30,9 +34,9 @@ export default function Programme() {
             </Link>
           </Text>
         </Box>
-        <Box marginTop={6}>
+        <Box marginTop={6} display="flex" alignItems="center" flexDir="column">
           <Text>15h00: Accueil</Text>
-          <Text pt={2}>15h30 - 16h30: Cérémonie Laîque</Text>
+          <Text pt={2}>15h30 - 16h30: Cérémonie Laïque</Text>
           <Text pt={2}>17h00 - 17h30: Photos de groupes</Text>
           <Text pt={2}>18h00 - 20h00: Vin d’honneur</Text>
           {isMariage ? (

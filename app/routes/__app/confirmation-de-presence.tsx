@@ -110,6 +110,9 @@ export default function ConfirmationPresence() {
 
   return (
     <Box marginTop={16}>
+      <Text mb={8} align="center">
+        Pour rappel, vous pouvez confirmer votre présence jusqu’au 31 mars 2023.
+      </Text>
       {actionData?.error ? (
         <Text mb={8} align="center" color="red.600">
           {actionData.error}

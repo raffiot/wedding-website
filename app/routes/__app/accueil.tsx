@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import {
   AspectRatio,
   Box,
@@ -7,27 +8,14 @@ import {
   useColorMode,
   Heading,
 } from "@chakra-ui/react";
-import { LoaderFunction, json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { ArrowUpIcon } from "@chakra-ui/icons";
 import imageAccueil from "~/assets/accueil-image-1.jpg";
 import ewanRaf1 from "~/assets/ewan-raf-1.jpg";
 import ewanRaf2 from "~/assets/ewan-raf-2.jpg";
-import { getUserSession } from "~/session";
-import { useCallback, useState } from "react";
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getUserSession(request);
-  return json({
-    loginType: session.get("LoginType"),
-  });
-};
 
 export default function Acceuil() {
   const [isEasterEgg, setIsEasterEgg] = useState(false);
   const { toggleColorMode } = useColorMode();
-  const { loginType } = useLoaderData<typeof loader>();
-  const isMariage = loginType === "mariage";
 
   const handleEasterEgg = useCallback(() => {
     toggleColorMode();
@@ -37,7 +25,9 @@ export default function Acceuil() {
     }, 3000);
   }, [isEasterEgg, toggleColorMode]);
 
-  console.log("isEasterEgg", isEasterEgg);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isEasterEgg]);
 
   if (isEasterEgg) {
     return (
@@ -47,7 +37,7 @@ export default function Acceuil() {
             Le vrai mariage de Ewan ❤️
           </Heading>
           <Text align="center" mt={16}>
-            Si vous trouvez cette page c'est que vous êtes convié au vertiable
+            Si vous trouvez cette page c'est que vous êtes convié au véritable
             mariage du 24 Juin 2023 qui verra s'unir Ewan et Raphaël dans
             l'amour et le bonheur pour des siècles et des siecles.
           </Text>
@@ -79,29 +69,39 @@ export default function Acceuil() {
       <Box width="50%" marginTop={16}>
         <Text align="center">
           Nous sommes ravis de vous convier à notre union que nous célébrerons
-          le samedi 24 Juin 2023 au château de Césarges à Maubec.
+          le
+        </Text>
+        <Text align="center" pt="1" fontSize="2xl">
+          Samedi 24 Juin 2023
+        </Text>
+        <Text align="center" pt="1">
+          au
+        </Text>
+        <Text align="center" pt="1" fontSize="2xl">
+          Château de Césarges
+        </Text>
+        <Text align="center" pt="1">
+          (38300 Maubec)
         </Text>
         <Text align="center" pt="4">
-          Nous partagerons sur ce site toutes les informations utiles à propos
-          du mariage, du programme aux suggestions d'hôtels, afin que vous
-          puissiez profiter au maximum. Si vous avez des questions
-          supplémentaires, merci de nous contacter directement.
+          Ce site internet permettra de partager toutes les informations sur
+          notre mariage. Nous vous invitons à enregistrer votre participation
+          sur la page prévue à cet effet.
         </Text>
-        <Text align="center" pt="4">
-          Nous savons que vous serez tous sur votre 31, mais n'oubliez pas pour
-          autant de vous mettre à l'aise pour vous amuser{" "}
-          {isMariage
-            ? `et danser jusqu'au
-          bout de la nuit ! Nous offrons en récompense un copieux dîner et une soirée de folie
-          sur le dancefloor.`
-            : "!"}
+        <Text align="center" pt="3">
+          Certaines réponses à vos questions se trouvent déjà sur la page
+          “Question/Réponse”.
         </Text>
-        <Text align="center" pt="4">
-          A très vite,
+        <Text align="center" pt="3">
+          Si vous avez des questions supplémentaires, merci de nous contacter
+          directement.
         </Text>
-        <Text align="center" pt="4">
-          Margaux et Ewan
+        <Text align="center" pt="3">
+          Nous savons que vous serez tous sur votre 31 pour cet événement, mais
+          n'oubliez pas pour autant de vous mettre à l'aise pour vous amuser !
         </Text>
+        <Text align="center">A très vite,</Text>
+        <Text align="center">Margaux et Ewan</Text>
         <AspectRatio marginTop={16} ratio={4 / 3}>
           <Image src={imageAccueil} objectFit="cover" borderRadius={16} />
         </AspectRatio>
